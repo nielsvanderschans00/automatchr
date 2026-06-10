@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AutoMatchr — Privacybeleid</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FAF7F2;
+    --navy: #1C2B3A;
+    --navy-soft: #2D3F52;
+    --green: #2D6A4F;
+    --green-light: #40916C;
+    --green-pale: #D8F3DC;
+    --amber: #E9A628;
+    --text: #1C2B3A;
+    --text-mid: #4A5E72;
+    --text-muted: #8A9BB0;
+    --border: #E8E2D9;
+    --card: #FFFFFF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--cream);
+    color: var(--text);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    min-height: 100vh;
+  }
+
+  /* Nav */
+  nav {
+    background: var(--navy);
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-logo {
+    font-family: 'Fraunces', serif;
+    font-weight: 800;
+    font-size: 20px;
+    color: white;
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--amber); }
+
+  .nav-back {
+    font-size: 14px;
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s;
+  }
+
+  .nav-back:hover { color: white; }
+
+  /* Header */
+  .header {
+    background: var(--navy);
+    padding: 60px 40px;
+    text-align: center;
+  }
+
+  .header h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: clamp(28px, 4vw, 40px);
+    color: white;
+    letter-spacing: -0.5px;
+    margin-bottom: 12px;
+  }
+
+  .header p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.5);
+    font-weight: 300;
+  }
+
+  /* Content */
+  .content {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 60px 24px 80px;
+  }
+
+  .placeholder {
+    background: var(--amber);
+    color: var(--navy);
+    font-weight: 600;
+    font-size: 13px;
+    padding: 2px 8px;
+    border-radius: 6px;
+    display: inline-block;
+  }
+
+  .notice {
+    background: var(--green-pale);
+    border: 1px solid rgba(45,106,79,0.2);
+    border-radius: 14px;
+    padding: 16px 20px;
+    margin-bottom: 40px;
+    font-size: 13px;
+    color: var(--green);
+    font-weight: 500;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .section {
+    margin-bottom: 40px;
+  }
+
+  .section h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--navy);
+    margin-bottom: 14px;
+    letter-spacing: -0.3px;
+    padding-bottom: 10px;
+    border-bottom: 1.5px solid var(--border);
+  }
+
+  .section p {
+    font-size: 15px;
+    color: var(--text-mid);
+    line-height: 1.8;
+    font-weight: 300;
+    margin-bottom: 12px;
+  }
+
+  .section ul {
+    padding-left: 20px;
+    margin-bottom: 12px;
+  }
+
+  .section ul li {
+    font-size: 15px;
+    color: var(--text-mid);
+    line-height: 1.7;
+    font-weight: 300;
+    margin-bottom: 6px;
+  }
+
+  .section strong {
+    color: var(--navy);
+    font-weight: 600;
+  }
+
+  .contact-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-top: 16px;
+    box-shadow: 0 2px 12px rgba(28,43,58,0.06);
+  }
+
+  .contact-card p {
+    margin-bottom: 6px;
+  }
+
+  .contact-card a {
+    color: var(--green-light);
+    text-decoration: none;
+  }
+
+  footer {
+    background: var(--navy);
+    padding: 32px 40px;
+    text-align: center;
+  }
+
+  footer p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+    font-weight: 300;
+  }
+
+  .footer-logo {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: white;
+    margin-bottom: 8px;
+  }
+
+  .footer-logo span { color: var(--amber); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="automatchr-landing.html" class="nav-logo">Auto<span>Matchr</span></a>
+  <a href="automatchr-landing.html" class="nav-back">← Terug naar home</a>
+</nav>
+
+<div class="header">
+  <h1>Privacybeleid</h1>
+  <p>Laatst bijgewerkt: <span class="placeholder">datum invullen</span></p>
+</div>
+
+<div class="content">
+
+  <div class="notice">
+    ℹ️ Vul alle gele velden in zodra je bent ingeschreven bij de KvK en een e-mailadres hebt aangemaakt.
+  </div>
+
+  <div class="section">
+    <h2>1. Wie zijn wij?</h2>
+    <p>AutoMatchr is een onafhankelijke auto-adviesdienst voor gezinnen in Nederland. Wij helpen gezinnen de juiste auto te vinden — zonder verkooppraatje en zonder verborgen belangen.</p>
+    <p><strong>Bedrijfsnaam:</strong> <span class="placeholder">AutoMatchr / [jouw naam]</span><br>
+    <strong>KvK-nummer:</strong> <span class="placeholder">invullen na inschrijving</span><br>
+    <strong>Vestigingsplaats:</strong> <span class="placeholder">stad invullen</span><br>
+    <strong>E-mailadres:</strong> <span class="placeholder">info@automatchr.nl</span></p>
+  </div>
+
+  <div class="section">
+    <h2>2. Welke gegevens verzamelen wij?</h2>
+    <p>Wij verzamelen alleen de gegevens die nodig zijn om jullie goed te kunnen adviseren. Dit zijn:</p>
+    <ul>
+      <li>Antwoorden op de vragenlijst — over jullie gezin, gebruik en voorkeuren</li>
+      <li>E-mailadres — om het rapport toe te sturen</li>
+      <li>WhatsApp-nummer — indien jullie contact opnemen via WhatsApp</li>
+      <li>Betalingsgegevens — verwerkt via onze betaalprovider, wij slaan geen betaalgegevens op</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>3. Waarvoor gebruiken wij jullie gegevens?</h2>
+    <p>Wij gebruiken jullie gegevens uitsluitend voor:</p>
+    <ul>
+      <li>Het opstellen van het persoonlijke adviesrapport</li>
+      <li>Het begeleiden bij de auto-aankoop (stap 3)</li>
+      <li>Contact over jullie aanvraag via e-mail of WhatsApp</li>
+      <li>Het verbeteren van onze dienstverlening</li>
+    </ul>
+    <p>Wij verkopen jullie gegevens <strong>nooit</strong> aan derden en delen ze niet met autodealers of andere commerciële partijen.</p>
+  </div>
+
+  <div class="section">
+    <h2>4. Hoe lang bewaren wij jullie gegevens?</h2>
+    <p>Wij bewaren jullie gegevens zolang als nodig voor de uitvoering van onze dienst. Na afronding van het traject bewaren wij jullie gegevens maximaal <strong>12 maanden</strong>, tenzij jullie eerder verwijdering verzoeken.</p>
+    <p>Financiële gegevens bewaren wij conform de wettelijke bewaarplicht van 7 jaar.</p>
+  </div>
+
+  <div class="section">
+    <h2>5. Beveiliging van jullie gegevens</h2>
+    <p>Wij nemen de beveiliging van jullie gegevens serieus. Jullie gegevens worden verwerkt via beveiligde verbindingen (HTTPS) en opgeslagen op beveiligde systemen. Wij delen geen inloggegevens en werken niet met onbeveiligde opslag.</p>
+  </div>
+
+  <div class="section">
+    <h2>6. Cookies</h2>
+    <p>Onze website maakt gebruik van functionele cookies die noodzakelijk zijn voor het correct functioneren van de website. Wij plaatsen geen tracking- of advertentiecookies.</p>
+  </div>
+
+  <div class="section">
+    <h2>7. Jullie rechten</h2>
+    <p>Op grond van de AVG hebben jullie de volgende rechten:</p>
+    <ul>
+      <li><strong>Inzage</strong> — jullie mogen opvragen welke gegevens wij van jullie hebben</li>
+      <li><strong>Correctie</strong> — jullie mogen onjuiste gegevens laten corrigeren</li>
+      <li><strong>Verwijdering</strong> — jullie mogen verzoeken om verwijdering van jullie gegevens</li>
+      <li><strong>Bezwaar</strong> — jullie mogen bezwaar maken tegen de verwerking van jullie gegevens</li>
+      <li><strong>Overdraagbaarheid</strong> — jullie mogen een kopie van jullie gegevens opvragen</li>
+    </ul>
+    <p>Neem contact met ons op via de gegevens onderaan om een verzoek in te dienen. Wij reageren binnen 30 dagen.</p>
+  </div>
+
+  <div class="section">
+    <h2>8. Klachten</h2>
+    <p>Hebben jullie een klacht over hoe wij met jullie gegevens omgaan? Neem dan eerst contact met ons op. Komen we er niet uit, dan kunnen jullie een klacht indienen bij de <strong>Autoriteit Persoonsgegevens</strong> via <a href="https://www.autoriteitpersoonsgegevens.nl" target="_blank" style="color: var(--green-light);">autoriteitpersoonsgegevens.nl</a>.</p>
+  </div>
+
+  <div class="section">
+    <h2>9. Wijzigingen</h2>
+    <p>Wij kunnen dit privacybeleid aanpassen. De meest actuele versie staat altijd op deze pagina. Bij belangrijke wijzigingen informeren wij actieve klanten via e-mail.</p>
+  </div>
+
+  <div class="section">
+    <h2>10. Contact</h2>
+    <p>Vragen over dit privacybeleid of jullie gegevens? Neem gerust contact op:</p>
+    <div class="contact-card">
+      <p><strong>AutoMatchr</strong></p>
+      <p>📧 <a href="mailto:info@automatchr.nl"><span class="placeholder">info@automatchr.nl</span></a></p>
+      <p>💬 WhatsApp: <span class="placeholder">+31 6 XX XX XX XX</span></p>
+      <p>📍 <span class="placeholder">Stad, Nederland</span></p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-logo">Auto<span>Matchr</span></div>
+  <p>© 2026 AutoMatchr · Onafhankelijk auto-advies voor gezinnen in Nederland</p>
+</footer>
+
+</body>
+</html>

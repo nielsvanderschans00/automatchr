@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AutoMatchr — Welke auto past bij jullie?</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FAF7F2;
+    --warm-white: #FFFFF;
+    --navy: #1C2B3A;
+    --navy-soft: #2D3F52;
+    --green: #2D6A4F;
+    --green-light: #40916C;
+    --green-pale: #D8F3DC;
+    --amber: #E9A628;
+    --amber-pale: #FEF3C7;
+    --text: #1C2B3A;
+    --text-mid: #4A5E72;
+    --text-muted: #8A9BB0;
+    --border: #E8E2D9;
+    --card: #FFFFFF;
+    --radius: 20px;
+    --shadow: 0 4px 24px rgba(28,43,58,0.08);
+    --shadow-lg: 0 16px 48px rgba(28,43,58,0.14);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--cream);
+    color: var(--text);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 400px;
+    background: linear-gradient(180deg, rgba(45,106,79,0.06) 0%, transparent 100%);
+    pointer-events: none;
+  }
+
+  .container {
+    max-width: 620px;
+    margin: 0 auto;
+    padding: 40px 20px 100px;
+    position: relative;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 40px;
+    animation: fadeUp 0.7s ease both;
+  }
+
+  .logo {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 20px;
+    color: var(--navy);
+    margin-bottom: 28px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .logo-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--green);
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .header h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: clamp(30px, 6vw, 46px);
+    line-height: 1.15;
+    color: var(--navy);
+    margin-bottom: 16px;
+    letter-spacing: -0.5px;
+  }
+
+  .header h1 em {
+    font-style: italic;
+    color: var(--green-light);
+  }
+
+  .header p {
+    font-size: 16px;
+    color: var(--text-mid);
+    line-height: 1.7;
+    font-weight: 300;
+    max-width: 440px;
+    margin: 0 auto 24px;
+  }
+
+  .time-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--green-pale);
+    color: var(--green);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 99px;
+  }
+
+  /* Progress */
+  .progress-wrap {
+    margin-bottom: 28px;
+    animation: fadeUp 0.7s 0.1s ease both;
+  }
+
+  .block-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .block-icon {
+    font-size: 18px;
+  }
+
+  .block-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+  }
+
+  .progress-bar {
+    height: 4px;
+    background: var(--border);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--green), var(--amber));
+    border-radius: 99px;
+    transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  .progress-steps {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+  }
+
+  .progress-step-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--border);
+    transition: background 0.3s ease;
+  }
+
+  .progress-step-dot.done { background: var(--green); }
+  .progress-step-dot.active { background: var(--amber); }
+
+  /* Card */
+  .question-card {
+    background: var(--card);
+    border-radius: 28px;
+    padding: 40px 36px;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid rgba(232,226,217,0.6);
+    animation: fadeUp 0.5s ease both;
+  }
+
+  @media (max-width: 480px) {
+    .question-card { padding: 28px 22px; }
+  }
+
+  .q-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .q-number {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .q-counter {
+    font-size: 12px;
+    color: var(--text-muted);
+    background: var(--cream);
+    padding: 4px 10px;
+    border-radius: 99px;
+    font-weight: 500;
+  }
+
+  .question-text {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: clamp(20px, 3.5vw, 26px);
+    line-height: 1.35;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+
+  .question-sub {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+    font-style: italic;
+  }
+
+  /* Options */
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .options.multi-hint::before {
+    content: 'Meerdere antwoorden mogelijk';
+    display: block;
+    font-size: 12px;
+    color: var(--amber);
+    font-weight: 600;
+    margin-bottom: 4px;
+    letter-spacing: 0.3px;
+  }
+
+  .option {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 15px 18px;
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    background: var(--cream);
+    user-select: none;
+    position: relative;
+  }
+
+  .option:hover {
+    border-color: var(--green-light);
+    background: rgba(64,145,108,0.04);
+    transform: translateX(3px);
+  }
+
+  .option.selected {
+    border-color: var(--green);
+    background: rgba(45,106,79,0.06);
+  }
+
+  .option-check {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s ease;
+    background: white;
+  }
+
+  .option.multi .option-check {
+    border-radius: 6px;
+  }
+
+  .option.selected .option-check {
+    background: var(--green);
+    border-color: var(--green);
+  }
+
+  .option-check svg {
+    width: 11px;
+    height: 11px;
+    opacity: 0;
+    transform: scale(0.3);
+    transition: all 0.2s ease;
+  }
+
+  .option.selected .option-check svg {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .option-text {
+    font-size: 15px;
+    color: var(--text-mid);
+    font-weight: 400;
+    line-height: 1.4;
+    transition: color 0.2s;
+  }
+
+  .option.selected .option-text {
+    color: var(--navy);
+    font-weight: 500;
+  }
+
+  /* Open text */
+  .open-field {
+    width: 100%;
+    padding: 14px 18px;
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 15px;
+    color: var(--text);
+    background: var(--cream);
+    resize: none;
+    outline: none;
+    transition: border-color 0.2s ease;
+    min-height: 80px;
+    margin-top: 12px;
+  }
+
+  .open-field:focus {
+    border-color: var(--green-light);
+    background: white;
+  }
+
+  .open-field::placeholder { color: var(--text-muted); }
+
+  /* Nav */
+  .nav {
+    display: flex;
+    gap: 12px;
+    margin-top: 28px;
+    align-items: center;
+  }
+
+  .btn {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 14px 24px;
+    border-radius: 14px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-back {
+    background: var(--cream);
+    color: var(--text-muted);
+    border: 2px solid var(--border);
+    padding: 14px 18px;
+  }
+
+  .btn-back:hover { color: var(--text); border-color: #ccc; }
+
+  .btn-next {
+    flex: 1;
+    background: var(--navy);
+    color: white;
+    justify-content: center;
+  }
+
+  .btn-next:hover:not(:disabled) {
+    background: var(--navy-soft);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(28,43,58,0.25);
+  }
+
+  .btn-next:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* Result */
+  .result-card {
+    display: none;
+    animation: fadeUp 0.7s ease both;
+  }
+
+  .result-hero {
+    background: var(--navy);
+    border-radius: 28px;
+    padding: 40px 36px;
+    color: white;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .result-hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(45,106,79,0.3), transparent 70%);
+    border-radius: 50%;
+  }
+
+  .result-hero::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: -40px;
+    width: 160px; height: 160px;
+    background: radial-gradient(circle, rgba(233,166,40,0.15), transparent 70%);
+    border-radius: 50%;
+  }
+
+  .result-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 99px;
+    padding: 5px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .result-hero h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: clamp(26px, 5vw, 38px);
+    line-height: 1.2;
+    margin-bottom: 10px;
+    position: relative;
+    z-index: 1;
+    letter-spacing: -0.5px;
+  }
+
+  .result-hero p {
+    font-size: 15px;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.7;
+    font-weight: 300;
+    position: relative;
+    z-index: 1;
+  }
+
+  .result-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  @media (max-width: 440px) { .result-grid { grid-template-columns: 1fr; } }
+
+  .result-item {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 20px;
+    box-shadow: var(--shadow);
+  }
+
+  .result-item-icon { font-size: 22px; margin-bottom: 10px; }
+
+  .result-item-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .result-item-value {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--navy);
+    line-height: 1.3;
+  }
+
+  .result-item-value.green { color: var(--green-light); }
+  .result-item-value.amber { color: var(--amber); }
+
+  /* Upsell */
+  .upsell-card {
+    background: white;
+    border: 2px solid var(--green-pale);
+    border-radius: 28px;
+    padding: 32px 36px;
+    box-shadow: var(--shadow);
+    margin-bottom: 16px;
+  }
+
+  .upsell-step {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--green-pale);
+    color: var(--green);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 99px;
+    margin-bottom: 16px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .upsell-card h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--navy);
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+
+  .upsell-card p {
+    font-size: 15px;
+    color: var(--text-mid);
+    line-height: 1.7;
+    font-weight: 300;
+    margin-bottom: 20px;
+  }
+
+  .upsell-features {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+
+  .upsell-feature {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--text-mid);
+  }
+
+  .upsell-feature-dot {
+    width: 20px;
+    height: 20px;
+    background: var(--green-pale);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 11px;
+  }
+
+  .btn-cta {
+    width: 100%;
+    background: var(--green);
+    color: white;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 18px 28px;
+    border-radius: 16px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .btn-cta:hover {
+    background: var(--green-light);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(45,106,79,0.3);
+  }
+
+  .price-tag {
+    background: rgba(255,255,255,0.2);
+    padding: 3px 10px;
+    border-radius: 99px;
+    font-size: 14px;
+  }
+
+  .trust-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 14px;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .slide-in { animation: slideIn 0.35s ease both; }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(16px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="logo">
+      AutoMatchr <span class="logo-dot"></span>
+    </div>
+    <h1>Welke auto past<br><em>echt</em> bij jullie?</h1>
+    <p>Geen verkooppraatje, geen gedoe. Wij stellen jullie een paar eerlijke vragen en geven je direct een helder antwoord.</p>
+    <div class="time-badge">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      Duurt ongeveer 3 minuten
+    </div>
+  </div>
+
+  <div class="progress-wrap" id="progressWrap">
+    <div class="block-label">
+      <span class="block-icon" id="blockIcon">🏠</span>
+      <span class="block-title" id="blockTitle">Even kennismaken</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill" style="width: 5%"></div>
+    </div>
+  </div>
+
+  <div class="question-card" id="questionCard">
+    <div class="q-meta">
+      <span class="q-number" id="qNumber">Vraag 1</span>
+      <span class="q-counter" id="qCounter">1 van 18</span>
+    </div>
+    <div class="question-text" id="questionText"></div>
+    <div class="question-sub" id="questionSub"></div>
+    <div class="options" id="optionsContainer"></div>
+    <div class="nav">
+      <button class="btn btn-back" id="btnBack" onclick="prevQ()" style="display:none">←</button>
+      <button class="btn btn-next" id="btnNext" onclick="nextQ()" disabled>Volgende →</button>
+    </div>
+  </div>
+
+  <div class="result-card" id="resultCard"></div>
+
+</div>
+
+<script>
+const blocks = [
+  { icon: '🏠', title: 'Even kennismaken' },
+  { icon: '🚗', title: 'Hoe leven jullie?' },
+  { icon: '🔧', title: 'Jullie situatie' },
+  { icon: '⚡', title: 'Jullie voorkeuren' },
+  { icon: '💬', title: 'Laatste vraag' }
+];
+
+const questions = [
+  // Blok 1
+  { block: 0, text: "Hoe groot is de bende thuis?", sub: "", type: "single", options: ["We zijn met z'n drieën", "Met z'n vieren", "Met z'n vijven of meer"], key: "gezin" },
+  { block: 0, text: "Hoe oud zijn de kids?", sub: "", type: "multi", options: ["Nog klein (0–4 jaar)", "Basisschoolleeftijd (5–12 jaar)", "Tieners (13+)"], key: "leeftijd" },
+  { block: 0, text: "Wat gaat er bij jullie altijd mee de auto in?", sub: "", type: "multi", options: ["Kinderwagen of buggy", "Fietsen of fietsdrager", "De hond", "Sporttassen en clubspullen", "Eigenlijk niks bijzonders"], key: "mee" },
+  // Blok 2
+  { block: 1, text: "Wat is jullie auto eigenlijk de hele dag aan het doen?", sub: "", type: "single", options: ["Woon-werkverkeer en school", "Boodschappen en korte ritjes", "Alles door elkaar", "Vooral vakanties en uitjes"], key: "gebruik" },
+  { block: 1, text: "Hoeveel kilometer leggen jullie per jaar ongeveer af?", sub: "", type: "single", options: ["Minder dan 10.000 km", "Tussen 10.000 en 20.000 km", "Meer dan 20.000 km"], key: "km" },
+  { block: 1, text: "Hoe ver gaan jullie op vakantie?", sub: "", type: "single", options: ["Gewoon in Nederland of België", "Europa, maar we nemen de boot of het vliegtuig", "Europa, lekker met de auto er naartoe", "Ver weg, de auto blijft thuis"], key: "vakantie" },
+  // Blok 3
+  { block: 2, text: "Waar staat de auto 's avonds?", sub: "", type: "single", options: ["Veilig in de garage", "Op onze eigen oprit", "Gewoon op straat"], key: "parkeren" },
+  { block: 2, text: "Kunnen jullie de auto opladen?", sub: "", type: "single", options: ["Ja, we hebben thuis een laadpaal", "Niet thuis, maar wel op het werk", "Nog niet, maar het zou kunnen", "Nee, en dat komt er ook niet van"], key: "laden" },
+  { block: 2, text: "Hoe lang rijden jullie normaal in dezelfde auto?", sub: "", type: "single", options: ["Korter dan 3 jaar — we wisselen graag", "3 tot 5 jaar", "5 tot 7 jaar", "Zo lang mogelijk, tot hij echt op is"], key: "doorlooptijd" },
+  { block: 2, text: "Waarom zoeken jullie nu een andere auto?", sub: "", type: "single", options: ["Het gezin is gegroeid en de huidige past niet meer", "De huidige auto begint oud te worden", "We zijn gewoon toe aan iets nieuws", "Dit is onze eerste auto"], key: "reden" },
+  { block: 2, text: "Hoe willen jullie de auto betalen?", sub: "", type: "single", options: ["Gewoon cash", "Via financiering", "Via lease", "Dat weten we nog niet"], key: "betaling" },
+  { block: 2, text: "Wat mag de nieuwe auto kosten — en wat zou echt te ver gaan?", sub: "", type: "single", options: ["Tot €20.000", "Tussen €20.000 en €35.000", "Tussen €35.000 en €50.000"], key: "budget" },
+  // Blok 4
+  { block: 3, text: "Wat rijden jullie nu?", sub: "", type: "single", options: ["Een kleine hatchback", "Een stationwagen", "Een SUV", "Een MPV of familiebus", "We hebben nog geen auto"], key: "huidigtype" },
+  { block: 3, text: "Wat missen jullie het meest in de huidige auto?", sub: "", type: "multi", options: ["Ruimte — het is gewoon te krap", "Zuinigheid — we tanken veel te veel", "Comfort — lange ritten zijn geen feest", "Betrouwbaarheid — we hebben te vaak pech", "Moderne technologie"], key: "mist" },
+  { block: 3, text: "Zijn jullie open voor elektrisch rijden?", sub: "", type: "single", options: ["Ja, we zijn er klaar voor", "Misschien — maar we hebben nog twijfels", "Nee, liever gewoon benzine of diesel"], key: "elektrisch" },
+  { block: 3, text: "Als jullie één ding het allerbelangrijkst vinden, wat is het dan?", sub: "", type: "single", options: ["Zo min mogelijk kosten per maand", "Veiligheid — onze kids zitten erin", "Ruimte en comfort voor het hele gezin", "Goed voor het milieu"], key: "prioriteit" },
+  { block: 3, text: "Wat is jullie grootste angst bij het kopen van een auto?", sub: "", type: "single", options: ["Dat we te veel betalen", "Dat we de verkeerde keuze maken", "Dat de dealer ons een rad voor ogen draait", "Dat er snel iets stuk gaat"], key: "angst" },
+  // Blok 5
+  { block: 4, text: "Is er nog iets wat we moeten weten om jullie écht goed te helpen?", sub: "Optioneel — schrijf gerust wat je wilt.", type: "open", key: "extra" }
+];
+
+let current = 0;
+let answers = {};
+
+function render() {
+  const q = questions[current];
+  const card = document.getElementById('questionCard');
+  card.classList.remove('slide-in');
+  void card.offsetWidth;
+  card.classList.add('slide-in');
+
+  // Block info
+  const b = blocks[q.block];
+  document.getElementById('blockIcon').textContent = b.icon;
+  document.getElementById('blockTitle').textContent = b.title;
+
+  // Progress
+  const pct = ((current + 1) / questions.length) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('qNumber').textContent = `Vraag ${current + 1}`;
+  document.getElementById('qCounter').textContent = `${current + 1} van ${questions.length}`;
+  document.getElementById('questionText').textContent = q.text;
+  document.getElementById('questionSub').textContent = q.sub || '';
+  document.getElementById('questionSub').style.display = q.sub ? 'block' : 'none';
+
+  // Options
+  const container = document.getElementById('optionsContainer');
+  container.innerHTML = '';
+
+  if (q.type === 'open') {
+    container.className = 'options';
+    const ta = document.createElement('textarea');
+    ta.className = 'open-field';
+    ta.placeholder = 'Typ hier jullie antwoord...';
+    ta.value = answers[q.key] || '';
+    ta.oninput = () => { answers[q.key] = ta.value; };
+    container.appendChild(ta);
+    document.getElementById('btnNext').disabled = false;
+    document.getElementById('btnNext').textContent = '🎉 Bekijk jullie profiel';
+  } else {
+    container.className = 'options' + (q.type === 'multi' ? ' multi-hint' : '');
+    q.options.forEach((opt, i) => {
+      const sel = q.type === 'multi'
+        ? (answers[q.key] || []).includes(i)
+        : answers[q.key] === i;
+      const div = document.createElement('div');
+      div.className = 'option' + (sel ? ' selected' : '') + (q.type === 'multi' ? ' multi' : '');
+      div.innerHTML = `
+        <div class="option-check">
+          <svg viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2.5">
+            <polyline points="1.5,6 4.5,9.5 10.5,2.5"/>
+          </svg>
+        </div>
+        <span class="option-text">${opt}</span>
+      `;
+      div.onclick = () => selectOpt(i, div, q);
+      container.appendChild(div);
+    });
+    updateNextBtn(q);
+  }
+
+  document.getElementById('btnBack').style.display = current === 0 ? 'none' : 'flex';
+  if (q.type !== 'open') {
+    document.getElementById('btnNext').textContent = current === questions.length - 1 ? '🎉 Bekijk jullie profiel' : 'Volgende →';
+  }
+}
+
+function selectOpt(i, div, q) {
+  if (q.type === 'multi') {
+    if (!answers[q.key]) answers[q.key] = [];
+    const idx = answers[q.key].indexOf(i);
+    if (idx > -1) answers[q.key].splice(idx, 1);
+    else answers[q.key].push(i);
+    document.querySelectorAll('.option').forEach((el, j) => {
+      el.classList.toggle('selected', answers[q.key].includes(j));
+    });
+  } else {
+    answers[q.key] = i;
+    document.querySelectorAll('.option').forEach((el, j) => {
+      el.classList.toggle('selected', j === i);
+    });
+  }
+  updateNextBtn(q);
+}
+
+function updateNextBtn(q) {
+  const btn = document.getElementById('btnNext');
+  if (q.type === 'multi') btn.disabled = !(answers[q.key] && answers[q.key].length > 0);
+  else btn.disabled = answers[q.key] === undefined;
+}
+
+function nextQ() {
+  const q = questions[current];
+  if (q.type !== 'open' && q.type !== 'multi' && answers[q.key] === undefined) return;
+  if (current < questions.length - 1) { current++; render(); }
+  else showResult();
+}
+
+function prevQ() {
+  if (current > 0) { current--; render(); }
+}
+
+function showResult() {
+  document.getElementById('questionCard').style.display = 'none';
+  document.getElementById('progressWrap').style.display = 'none';
+
+  const a = answers;
+  const budget = ['Tot €20.000', '€20.000 – €35.000', '€35.000 – €50.000'][a.budget] || '€20.000 – €35.000';
+
+  // Car type logic
+  let carType = 'SUV of Stationwagen';
+  if (a.gezin === 0 && a.gebruik === 0) carType = 'Compacte gezinsauto';
+  else if (a.gezin === 2 || (a.mee && a.mee.length >= 3)) carType = 'Ruime MPV of grote SUV';
+
+  // Aandrijving
+  let aandrijving = 'Benzine of diesel';
+  if (a.elektrisch === 0 && (a.laden === 0 || a.laden === 1)) aandrijving = 'Volledig elektrisch';
+  else if (a.elektrisch === 0 && a.laden === 2) aandrijving = 'Hybride (PHEV)';
+  else if (a.elektrisch === 1) aandrijving = 'Hybride of benzine';
+
+  // Prioriteit
+  const prioriteiten = ['Lage maandlasten', 'Veiligheid & betrouwbaarheid', 'Ruimte & comfort', 'Duurzaamheid'];
+  const prioriteit = prioriteiten[a.prioriteit] || 'Betrouwbaarheid';
+
+  // Aankoopstijl
+  const doorlooptijden = ['Wisselaar (< 3 jaar)', 'Middellang (3–5 jaar)', 'Langrijder (5–7 jaar)', 'Langrijder (7+ jaar)'];
+  const rijstijl = doorlooptijden[a.doorlooptijd] || 'Middellang';
+
+  const resultHTML = `
+    <div class="result-hero">
+      <div class="result-tag">✦ Jullie AutoMatchr Profiel</div>
+      <h2>Jullie hebben een duidelijk profiel</h2>
+      <p>Op basis van jullie antwoorden hebben we een helder beeld van wat jullie nodig hebben. Dit is de richting die het beste bij jullie gezin past.</p>
+    </div>
+
+    <div class="result-grid">
+      <div class="result-item">
+        <div class="result-item-icon">🚙</div>
+        <div class="result-item-label">Aanbevolen type</div>
+        <div class="result-item-value green">${carType}</div>
+      </div>
+      <div class="result-item">
+        <div class="result-item-icon">⚡</div>
+        <div class="result-item-label">Aandrijving</div>
+        <div class="result-item-value">${aandrijving}</div>
+      </div>
+      <div class="result-item">
+        <div class="result-item-icon">💶</div>
+        <div class="result-item-label">Budget</div>
+        <div class="result-item-value amber">${budget}</div>
+      </div>
+      <div class="result-item">
+        <div class="result-item-icon">🎯</div>
+        <div class="result-item-label">Jullie prioriteit</div>
+        <div class="result-item-value">${prioriteit}</div>
+      </div>
+      <div class="result-item">
+        <div class="result-item-icon">🔄</div>
+        <div class="result-item-label">Rijprofiel</div>
+        <div class="result-item-value">${rijstijl}</div>
+      </div>
+      <div class="result-item">
+        <div class="result-item-icon">💳</div>
+        <div class="result-item-label">Betaalvoorkeur</div>
+        <div class="result-item-value">${['Cash', 'Financiering', 'Lease', 'Nog onbekend'][a.betaling] || 'Nog onbekend'}</div>
+      </div>
+    </div>
+
+    <div class="upsell-card">
+      <div class="upsell-step">→ Stap 2</div>
+      <h3>Klaar voor jullie persoonlijke adviesrapport?</h3>
+      <p>Dit profiel geeft jullie de richting. Maar welke <em>specifieke auto's</em> passen écht bij jullie situatie? Dat ontdekken jullie in stap 2 — een volledig persoonlijk rapport, binnen 48 uur klaar.</p>
+      <div class="upsell-features">
+        <div class="upsell-feature">
+          <div class="upsell-feature-dot">✓</div>
+          Shortlist van 3–5 auto's die precies bij jullie passen
+        </div>
+        <div class="upsell-feature">
+          <div class="upsell-feature-dot">✓</div>
+          Uitleg waarom elke auto wel of niet geschikt is
+        </div>
+        <div class="upsell-feature">
+          <div class="upsell-feature-dot">✓</div>
+          Totale kostenoverzicht per auto (aanschaf + gebruik)
+        </div>
+        <div class="upsell-feature">
+          <div class="upsell-feature-dot">✓</div>
+          100% onafhankelijk — geen dealer, geen verborgen belang
+        </div>
+      </div>
+      <button class="btn-cta">
+        Ontvang jullie rapport <span class="price-tag">€50</span>
+      </button>
+      <div class="trust-row">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Binnen 48 uur in jullie inbox — of je geld terug
+      </div>
+    </div>
+  `;
+
+  const rc = document.getElementById('resultCard');
+  rc.innerHTML = resultHTML;
+  rc.style.display = 'block';
+}
+
+render();
+</script>
+</body>
+</html>
