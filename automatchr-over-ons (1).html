@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AutoMatchr — Over ons</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,400;1,9..144,700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FAF7F2;
+    --navy: #0F1E2D;
+    --navy-mid: #1A2F42;
+    --navy-soft: #243B52;
+    --green: #2D6A4F;
+    --green-light: #40916C;
+    --green-pale: #D8F3DC;
+    --amber: #E9A628;
+    --amber-pale: #FEF3C7;
+    --text: #1C2B3A;
+    --text-mid: #4A5E72;
+    --text-muted: #8A9BB0;
+    --text-light: rgba(255,255,255,0.65);
+    --border: #E8E2D9;
+    --border-dark: rgba(255,255,255,0.08);
+    --card: #FFFFFF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--text);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    min-height: 100vh;
+  }
+
+  /* Nav */
+  nav {
+    background: var(--navy);
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border-dark);
+  }
+
+  .nav-logo {
+    font-family: 'Fraunces', serif;
+    font-weight: 800;
+    font-size: 20px;
+    color: white;
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--amber); }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+
+  .nav-links a {
+    font-size: 14px;
+    color: var(--text-light);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: white; }
+
+  .nav-cta {
+    background: var(--amber) !important;
+    color: var(--navy) !important;
+    font-weight: 600 !important;
+    padding: 10px 20px;
+    border-radius: 10px;
+  }
+
+  @media (max-width: 640px) {
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+  }
+
+  /* Hero */
+  .hero {
+    background: var(--navy);
+    padding: 100px 24px 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 50% 0%, rgba(45,106,79,0.2) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 99px;
+    padding: 7px 16px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-light);
+    margin-bottom: 24px;
+    letter-spacing: 0.3px;
+  }
+
+  .hero h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 800;
+    font-size: clamp(32px, 6vw, 60px);
+    line-height: 1.15;
+    letter-spacing: -1.5px;
+    color: white;
+    margin-bottom: 20px;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--amber);
+  }
+
+  .hero p {
+    font-size: 18px;
+    color: var(--text-light);
+    font-weight: 300;
+    line-height: 1.7;
+    max-width: 520px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Missie sectie */
+  .missie {
+    background: var(--cream);
+    padding: 100px 24px;
+  }
+
+  .wrap {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--green-light);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-label::before {
+    content: '';
+    width: 20px;
+    height: 2px;
+    background: var(--green-light);
+    display: inline-block;
+  }
+
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: clamp(28px, 4vw, 44px);
+    line-height: 1.2;
+    color: var(--text);
+    letter-spacing: -0.5px;
+    margin-bottom: 20px;
+  }
+
+  .section-title em {
+    font-style: italic;
+    color: var(--green-light);
+  }
+
+  .section-body {
+    font-size: 16px;
+    color: var(--text-mid);
+    line-height: 1.9;
+    font-weight: 300;
+    max-width: 620px;
+  }
+
+  .section-body p { margin-bottom: 16px; }
+  .section-body p:last-child { margin-bottom: 0; }
+
+  /* Quote blok */
+  .quote-block {
+    background: var(--navy);
+    border-radius: 24px;
+    padding: 48px 40px;
+    margin: 60px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .quote-block::before {
+    content: '"';
+    font-family: 'Fraunces', serif;
+    font-size: 200px;
+    color: rgba(255,255,255,0.04);
+    position: absolute;
+    top: -40px;
+    left: 20px;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .quote-block blockquote {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: clamp(20px, 3vw, 28px);
+    color: white;
+    line-height: 1.5;
+    letter-spacing: -0.3px;
+    position: relative;
+    z-index: 1;
+    max-width: 600px;
+  }
+
+  .quote-block blockquote em {
+    color: var(--amber);
+    font-style: normal;
+  }
+
+  /* Waarden */
+  .waarden {
+    background: var(--navy-mid);
+    padding: 100px 24px;
+  }
+
+  .waarden-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-top: 48px;
+  }
+
+  @media (max-width: 640px) {
+    .waarden-grid { grid-template-columns: 1fr; }
+  }
+
+  .waarde-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border-dark);
+    border-radius: 20px;
+    padding: 28px 24px;
+    transition: all 0.3s ease;
+  }
+
+  .waarde-card:hover {
+    background: rgba(255,255,255,0.07);
+    transform: translateY(-3px);
+  }
+
+  .waarde-icon {
+    font-size: 28px;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .waarde-card h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 20px;
+    color: white;
+    margin-bottom: 10px;
+    letter-spacing: -0.3px;
+  }
+
+  .waarde-card p {
+    font-size: 14px;
+    color: var(--text-light);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* Visie */
+  .visie {
+    background: var(--cream);
+    padding: 100px 24px;
+  }
+
+  .visie-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+    margin-top: 48px;
+  }
+
+  @media (max-width: 640px) {
+    .visie-split { grid-template-columns: 1fr; gap: 40px; }
+  }
+
+  .fase-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .fase {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .fase-num {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--navy);
+    color: white;
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .fase-num.active {
+    background: var(--green);
+  }
+
+  .fase-content h4 {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .fase-content p {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  .fase-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 99px;
+    margin-bottom: 6px;
+  }
+
+  .fase-badge.now { background: var(--green-pale); color: var(--green); }
+  .fase-badge.later { background: var(--amber-pale); color: #9a6f00; }
+
+  /* CTA */
+  .cta-section {
+    background: var(--navy);
+    padding: 80px 24px;
+    text-align: center;
+  }
+
+  .cta-inner {
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  .cta-inner h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 800;
+    font-size: clamp(28px, 4vw, 40px);
+    color: white;
+    letter-spacing: -0.5px;
+    margin-bottom: 16px;
+  }
+
+  .cta-inner p {
+    font-size: 16px;
+    color: var(--text-light);
+    font-weight: 300;
+    line-height: 1.7;
+    margin-bottom: 32px;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--amber);
+    color: var(--navy);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 16px 32px;
+    border-radius: 14px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.25s ease;
+  }
+
+  .btn-primary:hover {
+    background: #F5B73D;
+    transform: translateY(-2px);
+    box-shadow: 0 16px 32px rgba(233,166,40,0.25);
+  }
+
+  /* Footer */
+  footer {
+    background: var(--navy);
+    border-top: 1px solid var(--border-dark);
+    padding: 32px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .footer-logo {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: white;
+  }
+
+  .footer-logo span { color: var(--amber); }
+
+  footer p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.35);
+    font-weight: 300;
+  }
+
+  /* Animations */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Auto<span>Matchr</span></a>
+  <div class="nav-links">
+    <a href="index.html#hoe-het-werkt">Hoe het werkt</a>
+    <a href="index.html#waarom">Waarom AutoMatchr</a>
+    <a href="automatchr-v2.html" class="nav-cta">Start gratis →</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-badge">Over AutoMatchr</div>
+  <h1>Niet neutraal.<br><em>Betrokken.</em></h1>
+  <p>AutoMatchr is ontstaan uit één overtuiging — gezinnen verdienen eerlijk auto-advies. Niet een catalogus. Niet een verkooppraatje. Gewoon de juiste auto.</p>
+</section>
+
+<!-- Missie -->
+<section class="missie">
+  <div class="wrap">
+    <div class="section-label">Onze missie</div>
+    <h2 class="section-title reveal">De leegte vullen die<br><em>AutoScout24 laat liggen</em></h2>
+    <div class="section-body reveal">
+      <p>AutoScout24 geeft je een catalogus van tienduizenden auto's. Maar welke past nu écht bij jouw gezin? Bij jouw budget, jouw kinderen, jouw vakantieplannen, jouw laadpaal — of het gebrek daaraan?</p>
+      <p>Daar zwijgen de grote platforms over. Ze zijn neutraal van nature — ze verdienen aan dealers die adverteren, niet aan gezinnen die goed geholpen worden. Dat is hun businessmodel, en dat is hun beperking.</p>
+      <p>AutoMatchr doet het anders. Wij zijn geen vergelijkingssite. Wij zijn een adviseur. Wij zijn niet neutraal — wij staan aan de kant van het gezin.</p>
+    </div>
+
+    <div class="quote-block reveal">
+      <blockquote>
+        "Niet een catalogus, maar een gids. Niet informatie, maar een <em>beslissing</em>. Dat is wat gezinnen verdienen."
+      </blockquote>
+    </div>
+
+    <div class="section-label">Wat we geloven</div>
+    <h2 class="section-title reveal">Een auto kopen is<br><em>een groot besluit</em></h2>
+    <div class="section-body reveal">
+      <p>Voor de meeste gezinnen is een auto de op één na grootste aankoop van het jaar — na het huis. En toch staan ze er grotendeels alleen voor. Ze scrollen door advertenties, worden overladen met technische specificaties en eindigen bij een dealer die zijn eigen belang heeft.</p>
+      <p>Wij geloven dat dat anders kan. Dat een gezin dat €30.000 uitgeeft recht heeft op eerlijk, onafhankelijk advies van iemand die niets te winnen heeft bij de verkoop.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Waarden -->
+<section class="waarden">
+  <div class="wrap">
+    <div class="section-label" style="color: var(--amber);">
+      <span style="background: var(--amber); width: 20px; height: 2px; display: inline-block;"></span>
+      Onze waarden
+    </div>
+    <h2 class="section-title reveal" style="color: white;">Waar wij voor staan</h2>
+
+    <div class="waarden-grid">
+      <div class="waarde-card reveal">
+        <span class="waarde-icon">🎯</span>
+        <h3>Eerlijkheid boven alles</h3>
+        <p>Wij zeggen wat wij denken. Als een auto niet bij jullie past, zeggen we dat — ook als het een dure auto is. Ons advies is altijd in het belang van het gezin, niet van de verkoper.</p>
+      </div>
+      <div class="waarde-card reveal" style="transition-delay: 0.1s">
+        <span class="waarde-icon">🛡️</span>
+        <h3>Volledig onafhankelijk</h3>
+        <p>Geen enkele dealer betaalt ons om gezinnen naar hen door te sturen. Wij hebben geen financieel belang bij welke auto jullie kopen of bij welke dealer jullie terechtkomen.</p>
+      </div>
+      <div class="waarde-card reveal" style="transition-delay: 0.2s">
+        <span class="waarde-icon">👨‍👩‍👧‍👦</span>
+        <h3>Gezinnen eerst</h3>
+        <p>Wij focussen uitsluitend op gezinnen. Niet omdat andere kopers minder belangrijk zijn, maar omdat wij geloven dat focus leidt tot beter advies. Gezinnen hebben unieke behoeften — en die begrijpen wij.</p>
+      </div>
+      <div class="waarde-card reveal" style="transition-delay: 0.3s">
+        <span class="waarde-icon">💡</span>
+        <h3>Duidelijkheid</h3>
+        <p>Geen jargon, geen technische specificaties die niemand begrijpt. Wij spreken gewone taal en geven een duidelijk antwoord op de vraag die er écht toe doet: welke auto moeten wij kopen?</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Visie -->
+<section class="visie">
+  <div class="wrap">
+    <div class="section-label">Onze visie</div>
+    <h2 class="section-title reveal">De poortwachter worden<br><em>tussen gezinnen en de automarkt</em></h2>
+
+    <div class="visie-split">
+      <div class="section-body reveal">
+        <p>Ons doel is groter dan één advies of één rapport. Wij willen het platform worden waar elk gezin in Nederland terecht kan als ze een auto zoeken.</p>
+        <p>Niet als catalogus, maar als vertrouwde gids. Niet als neutrale vergelijker, maar als betrokken adviseur die de markt kent en het belang van het gezin centraal stelt.</p>
+        <p>Uiteindelijk willen wij zo onmisbaar worden dat dealers bij ons aankloppen — niet andersom.</p>
+      </div>
+
+      <div class="fase-list reveal">
+        <div class="fase">
+          <div class="fase-num active">1</div>
+          <div class="fase-content">
+            <div class="fase-badge now">Nu</div>
+            <h4>Handmatig & leren</h4>
+            <p>Elke klant persoonlijk bedienen, expertise opbouwen en begrijpen wat gezinnen écht nodig hebben.</p>
+          </div>
+        </div>
+        <div class="fase">
+          <div class="fase-num">2</div>
+          <div class="fase-content">
+            <div class="fase-badge later">Binnenkort</div>
+            <h4>Automatiseren & schalen</h4>
+            <p>De processen automatiseren zodat we meer gezinnen kunnen helpen zonder in te leveren op kwaliteit.</p>
+          </div>
+        </div>
+        <div class="fase">
+          <div class="fase-num">3</div>
+          <div class="fase-content">
+            <div class="fase-badge later">Toekomst</div>
+            <h4>Dealer-netwerk opbouwen</h4>
+            <p>Een netwerk van betrouwbare dealers die weten dat een AutoMatchr-klant een serieuze koper is.</p>
+          </div>
+        </div>
+        <div class="fase">
+          <div class="fase-num">4</div>
+          <div class="fase-content">
+            <div class="fase-badge later">Toekomst</div>
+            <h4>Internationaal uitbreiden</h4>
+            <p>Het AutoMatchr model uitrollen naar België, Duitsland en Frankrijk.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <h2>Klaar om samen de juiste auto te vinden?</h2>
+    <p>Start de gratis vragenlijst en ontdek binnen 3 minuten welk type auto echt bij jullie gezin past.</p>
+    <a href="automatchr-v2.html" class="btn-primary">
+      Start gratis — duurt 3 minuten
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Auto<span>Matchr</span></div>
+  <p>© 2026 AutoMatchr · Onafhankelijk auto-advies voor gezinnen in Nederland</p>
+  <p style="font-size: 12px; color: rgba(255,255,255,0.25);">Geen dealer · Geen verborgen belangen · Gewoon eerlijk advies</p>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
