@@ -373,6 +373,54 @@
     .hero-right { justify-content:center; }
     .rapport-preview { max-width:100%; }
   }
+  
+/* ── reviews ── */
+  .reviews {
+    background: var(--navy-2);
+    border-top:1px solid var(--border-d);
+    border-bottom:1px solid var(--border-d);
+    padding:48px 80px;
+    overflow:hidden;
+  }
+
+  .reviews-inner {
+    display:flex; align-items:center; gap:16px;
+    animation:scroll-reviews 28s linear infinite;
+    width:max-content;
+  }
+
+  @keyframes scroll-reviews {
+    from { transform:translateX(0); }
+    to   { transform:translateX(-50%); }
+  }
+
+  .review-card {
+    background: rgba(255,255,255,0.04);
+    border:1px solid var(--border-d);
+    border-radius:var(--r-md);
+    padding:20px 24px;
+    min-width:280px; max-width:300px;
+    flex-shrink:0;
+  }
+
+  .review-stars {
+    display:flex; gap:3px; margin-bottom:10px;
+    font-size:13px; color: var(--amber);
+  }
+
+  .review-text {
+    font-size:14px; color: rgba(255,255,255,0.7);
+    line-height:1.6; font-weight:300;
+    font-style:italic;
+    margin-bottom:12px;
+  }
+
+  .review-author {
+    font-size:12px; color: var(--ink-muted);
+    font-weight:500;
+  }
+
+  @media (max-width:680px) { .reviews { padding:40px 0; } }
 
   /* ── problem ── */
   .problem {
