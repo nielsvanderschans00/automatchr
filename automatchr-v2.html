@@ -662,6 +662,23 @@
   </div>
 
   <div class="result-card" id="resultCard"></div>
+  <div class="payment-card" id="paymentCard" style="display:none;">
+    <div class="result-badge">✦ Jullie AutoMatchr Profiel is klaar</div>
+    <div class="result-title">Klaar voor een persoonlijk rapport?</div>
+    <div class="result-subtitle">Op basis van jullie antwoorden hebben we een duidelijk beeld. Voor €50 stellen we een volledig persoonlijk rapport samen met een shortlist van 3 à 4 auto's die écht bij jullie passen.</div>
+    <div class="upsell">
+      <h3>Wat jullie krijgen</h3>
+      <p>Een persoonlijk PDF rapport met jullie gezinsprofiel, aandrijvingsadvies, shortlist van specifieke modellen met voor- en nadelen en een eerlijk kostenoverzicht. Binnen 48 uur in jullie inbox.</p>
+      <button class="btn-cta" onclick="startStap2()">
+        Ja, ik wil het rapport — €50
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+    <div class="trust-note">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      100% onafhankelijk advies — geen dealer, geen verborgen belang
+    </div>
+  </div>
 
 </div>
 
@@ -671,33 +688,43 @@ const blocks = [
   { icon: '🚗', title: 'Hoe leven jullie?' },
   { icon: '🔧', title: 'Jullie situatie' },
   { icon: '⚡', title: 'Jullie voorkeuren' },
-  { icon: '💬', title: 'Laatste vraag' }
+  { icon: '💬', title: 'Laatste vraag' },
+  { icon: '🎯', title: 'Stap 2 — Verfijning' }
 ];
 
 const questions = [
   // Blok 1
-  { block: 0, text: "Hoe groot is de bende thuis?", sub: "", type: "single", options: ["We zijn met z'n drieën", "Met z'n vieren", "Met z'n vijven of meer"], key: "gezin" },
+  { block: 0, text: "Vertel eens — met hoeveel zijn jullie?", sub: "", type: "single", options: ["We zijn met z'n drieën", "Met z'n vieren", "Met z'n vijven of meer"], key: "gezin" },
   { block: 0, text: "Hoe oud zijn de kids?", sub: "", type: "multi", options: ["Nog klein (0–4 jaar)", "Basisschoolleeftijd (5–12 jaar)", "Tieners (13+)"], key: "leeftijd" },
   { block: 0, text: "Wat gaat er bij jullie altijd mee de auto in?", sub: "", type: "multi", options: ["Kinderwagen of buggy", "Fietsen of fietsdrager", "De hond", "Sporttassen en clubspullen", "Eigenlijk niks bijzonders"], key: "mee" },
   // Blok 2
   { block: 1, text: "Wat is jullie auto eigenlijk de hele dag aan het doen?", sub: "", type: "single", options: ["Woon-werkverkeer en school", "Boodschappen en korte ritjes", "Alles door elkaar", "Vooral vakanties en uitjes"], key: "gebruik" },
   { block: 1, text: "Hoeveel kilometer leggen jullie per jaar ongeveer af?", sub: "", type: "single", options: ["Minder dan 10.000 km", "Tussen 10.000 en 20.000 km", "Meer dan 20.000 km"], key: "km" },
-  { block: 1, text: "Hoe ver gaan jullie op vakantie?", sub: "", type: "single", options: ["Gewoon in Nederland of België", "Europa, maar we nemen de boot of het vliegtuig", "Europa, lekker met de auto er naartoe", "Ver weg, de auto blijft thuis"], key: "vakantie" },
+  { block: 1, text: "Hoe ver gaan jullie op vakantie?", sub: "", type: "single", options: ["Gewoon in Nederland of België", "Europa, maar we nemen de boot of het vliegtuig", "Europa, lekker met de auto er naartoe", "Dat wisselt — soms rijden we naar Spanje of Frankrijk, soms vliegen we", "Ver weg, de auto blijft thuis"], key: "vakantie" },
+  { block: 1, text: "Wat moeten jullie kunnen meenemen met de auto?", sub: "", type: "single", options: ["Alleen koffers en tassen, geen trekhaak nodig", "Iets aan de trekhaak, zoals een fietsdrager of aanhanger", "Een caravan"], key: "trekhaak" },
   // Blok 3
   { block: 2, text: "Waar staat de auto 's avonds?", sub: "", type: "single", options: ["Veilig in de garage", "Op onze eigen oprit", "Gewoon op straat"], key: "parkeren" },
   { block: 2, text: "Kunnen jullie de auto opladen?", sub: "", type: "single", options: ["Ja, we hebben thuis een laadpaal", "Niet thuis, maar wel op het werk", "Nog niet, maar het zou kunnen", "Nee, en dat komt er ook niet van"], key: "laden" },
   { block: 2, text: "Hoe lang rijden jullie normaal in dezelfde auto?", sub: "", type: "single", options: ["Korter dan 3 jaar — we wisselen graag", "3 tot 5 jaar", "5 tot 7 jaar", "Zo lang mogelijk, tot hij echt op is"], key: "doorlooptijd" },
   { block: 2, text: "Waarom zoeken jullie nu een andere auto?", sub: "", type: "single", options: ["Het gezin is gegroeid en de huidige past niet meer", "De huidige auto begint oud te worden", "We zijn gewoon toe aan iets nieuws", "Dit is onze eerste auto"], key: "reden" },
-  { block: 2, text: "Hoe willen jullie de auto betalen?", sub: "", type: "single", options: ["Gewoon cash", "Via financiering", "Via lease", "Dat weten we nog niet"], key: "betaling" },
-  { block: 2, text: "Wat mag de nieuwe auto kosten — en wat zou echt te ver gaan?", sub: "", type: "single", options: ["Tot €20.000", "Tussen €20.000 en €35.000", "Tussen €35.000 en €50.000"], key: "budget" },
+  { block: 2, text: "Hoe willen jullie de auto betalen?", sub: "", type: "single", options: ["Direct afrekenen, zonder financiering", "Via financiering", "Via lease", "Dat weten we nog niet"], key: "betaling" },
+  { block: 2, text: "Wat mag de nieuwe auto kosten — en wat zou echt te ver gaan?", sub: "", type: "single", options: ["Tot €15.000", "€15.000 – €20.000", "€20.000 – €25.000", "€25.000 – €30.000", "€30.000 – €40.000", "€40.000 – €50.000", "Meer dan €50.000"], key: "budget" },
   // Blok 4
   { block: 3, text: "Wat rijden jullie nu?", sub: "", type: "single", options: ["Een kleine hatchback", "Een stationwagen", "Een SUV", "Een MPV of familiebus", "We hebben nog geen auto"], key: "huidigtype" },
   { block: 3, text: "Wat missen jullie het meest in de huidige auto?", sub: "", type: "multi", options: ["Ruimte — het is gewoon te krap", "Zuinigheid — we tanken veel te veel", "Comfort — lange ritten zijn geen feest", "Betrouwbaarheid — we hebben te vaak pech", "Moderne technologie"], key: "mist" },
   { block: 3, text: "Zijn jullie open voor elektrisch rijden?", sub: "", type: "single", options: ["Ja, we zijn er klaar voor", "Misschien — maar we hebben nog twijfels", "Nee, liever gewoon benzine of diesel"], key: "elektrisch" },
   { block: 3, text: "Als jullie één ding het allerbelangrijkst vinden, wat is het dan?", sub: "", type: "single", options: ["Zo min mogelijk kosten per maand", "Veiligheid — onze kids zitten erin", "Ruimte en comfort voor het hele gezin", "Goed voor het milieu"], key: "prioriteit" },
-  { block: 3, text: "Wat is jullie grootste angst bij het kopen van een auto?", sub: "", type: "single", options: ["Dat we te veel betalen", "Dat we de verkeerde keuze maken", "Dat de dealer ons een rad voor ogen draait", "Dat er snel iets stuk gaat"], key: "angst" },
+  { block: 3, text: "Hoe denken jullie over het merk van de auto?", sub: "", type: "single", options: ["Liever een merk waar we al jaren van weten dat het betrouwbaar is", "We staan open voor elk merk, als de auto maar goed is", "We zijn nieuwsgierig naar nieuwere merken die nog niet iedereen kent", "Geen voorkeur — prijs en kwaliteit bepalen alles"], key: "merk" },
+  { block: 3, text: "Wat is jullie grootste angst bij het kopen van een auto?", sub: "", type: "single", options: ["Dat we te veel betalen", "Dat we de verkeerde keuze maken", "Dat we ons laten beïnvloeden door een verkoper", "Dat er snel iets stuk gaat"], key: "angst" },
   // Blok 5
-  { block: 4, text: "Is er nog iets wat we moeten weten om jullie écht goed te helpen?", sub: "Optioneel — schrijf gerust wat je wilt.", type: "open", key: "extra" }
+  { block: 4, text: "Is er nog iets wat we moeten weten om jullie écht goed te helpen?", sub: "Optioneel — schrijf gerust wat je wilt.", type: "open", key: "extra" },
+  // Blok 6 — Stap 2A Verfijningsvragen (na betaalmoment)
+  { block: 5, text: "Automaat of schakel?", sub: "", type: "single", options: ["Automaat, absoluut", "Schakel is prima", "Geen voorkeur"], key: "transmissie" },
+  { block: 5, text: "Hebben jullie specifieke wensen voor de aandrijving?", sub: "", type: "single", options: ["Nee, het advies uit stap 1 is prima", "Ik wil toch een andere aandrijving overwegen"], key: "aandrijving2" },
+  { block: 5, text: "Wat moet er absoluut op of aan de auto zitten?", sub: "Meerdere antwoorden mogelijk.", type: "multi", options: ["Parkeersensoren of achteruitrijcamera", "Trekhaak", "Stoelverwarming", "Panoramadak", "Apple CarPlay of Android Auto", "Adaptieve cruise control", "Ingebouwde navigatie", "Geen specifieke must-haves", "Anders, namelijk..."], key: "opties" },
+  { block: 5, text: "Hebben jullie nog ruimte voor extra opties bovenop het budget?", sub: "", type: "single", options: ["Nee, het budget is vast", "Ja, een paar honderd euro", "Ja, tot €2.000 extra", "Ja, meer dan €2.000 extra"], key: "budgetextra" },
+  { block: 5, text: "Hoe ver zijn jullie bereid te rijden om een auto te bekijken?", sub: "", type: "single", options: ["Liefst binnen 25 km", "Tot 50 km is prima", "Tot 100 km gaan we voor", "De afstand maakt ons niet uit, als de auto maar goed is"], key: "afstand" },
+  { block: 5, text: "Als jullie vrienden de nieuwe auto zien, wat mogen ze dan denken?", sub: "", type: "single", options: ["\"Lekker praktisch, gewoon een goede gezinsauto\"", "\"Nette auto, verzorgd maar niet overdreven — past precies bij ze\"", "\"Wauw, die ziet er goed uit — sportief en dynamisch\"", "\"Stijlvol en kwaliteit, dat past bij ze — premium en luxueus\""], key: "uitstraling" }
 ];
 
 let current = 0;
@@ -762,7 +789,13 @@ function render() {
 
   document.getElementById('btnBack').style.display = current === 0 ? 'none' : 'flex';
   if (q.type !== 'open') {
-    document.getElementById('btnNext').textContent = current === questions.length - 1 ? '🎉 Bekijk jullie profiel' : 'Volgende →';
+    if (current === questions.length - 1) {
+      document.getElementById('btnNext').textContent = '✦ Verstuur mijn profiel';
+    } else if (current === 19) {
+      document.getElementById('btnNext').textContent = 'Bekijk jullie profiel →';
+    } else {
+      document.getElementById('btnNext').textContent = 'Volgende →';
+    }
   }
 }
 
@@ -793,8 +826,25 @@ function updateNextBtn(q) {
 function nextQ() {
   const q = questions[current];
   if (q.type !== 'open' && q.type !== 'multi' && answers[q.key] === undefined) return;
-  if (current < questions.length - 1) { current++; render(); }
-  else showResult();
+  if (current < questions.length - 1) {
+    // Na stap 1 (vraag 20, index 19) betaalscherm tonen
+    if (current === 19) {
+      showResult();
+      return;
+    }
+    current++;
+    render();
+  } else {
+    showFinalResult();
+  }
+}
+
+function startStap2() {
+  document.getElementById('paymentCard').style.display = 'none';
+  document.getElementById('progressWrap').style.display = 'block';
+  document.getElementById('questionCard').style.display = 'block';
+  current = 20;
+  render();
 }
 
 function prevQ() {
@@ -874,7 +924,7 @@ function showResult() {
       <div class="upsell-features">
         <div class="upsell-feature">
           <div class="upsell-feature-dot">✓</div>
-          Shortlist van 3–5 auto's die precies bij jullie passen
+          Shortlist van 3–4 auto's die precies bij jullie passen
         </div>
         <div class="upsell-feature">
           <div class="upsell-feature-dot">✓</div>
@@ -889,7 +939,7 @@ function showResult() {
           100% onafhankelijk — geen dealer, geen verborgen belang
         </div>
       </div>
-      <button class="btn-cta">
+      <button class="btn-cta" onclick="showPayment()">
         Ontvang jullie rapport <span class="price-tag">€50</span>
       </button>
       <div class="trust-row">
@@ -901,6 +951,37 @@ function showResult() {
 
   const rc = document.getElementById('resultCard');
   rc.innerHTML = resultHTML;
+  rc.style.display = 'block';
+}
+
+function showPayment() {
+  document.getElementById('resultCard').style.display = 'none';
+  document.getElementById('progressWrap').style.display = 'block';
+  document.getElementById('questionCard').style.display = 'block';
+  current = 20;
+  render();
+}
+
+function showFinalResult() {
+  document.getElementById('questionCard').style.display = 'none';
+  document.getElementById('progressWrap').style.display = 'none';
+
+  const rc = document.getElementById('resultCard');
+  rc.innerHTML = `
+    <div class="result-hero">
+      <div class="result-tag">✦ Jullie profiel is compleet</div>
+      <h2>Bedankt — jullie rapport wordt gemaakt!</h2>
+      <p>We hebben alles wat we nodig hebben. Jullie persoonlijke shortlist van 3 à 4 auto's die écht bij jullie passen is binnen 48 uur in jullie inbox.</p>
+    </div>
+    <div class="upsell-card">
+      <h3>Wat nu?</h3>
+      <p>Wij gaan aan de slag met jullie profiel. Op basis van alle antwoorden stellen we een volledig persoonlijk rapport samen. Jullie hoeven niets meer te doen — wij nemen contact op zodra het rapport klaar is.</p>
+      <div class="trust-row" style="margin-top:0;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        100% onafhankelijk advies — geen dealer, geen verborgen belang
+      </div>
+    </div>
+  `;
   rc.style.display = 'block';
 }
 
